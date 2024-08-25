@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opportunities</title>
+    <style>
+body, h1, h2, h3, p, ul {
+            margin: 0;
+            padding: 0;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            color: #333;
+        }
+
+        body {
+            background-color: #f7f7f7;
+            line-height: 1.6;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: #004080;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        nav .nav-container {
+            display: flex;
+            gap: 15px;
+        }
+
+        nav a, nav button {
+            color: white;
+            text-align: center;
+            padding: 12px 15px;
+            text-decoration: none;
+            font-size: 16px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        nav a:hover, nav button:hover {
+            background-color: #0056b3;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 80px;
+            font-size: 28px;
+            color: #333;
+        }
+
+        /* Opportunity Section */
+        .opportunity-section {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 80px auto 0; /* Adjust margin to account for fixed nav */
+        }
+
+        .opportunity-section > div {
+            margin-bottom: 40px;
+        }
+
+        .opportunity-section h2 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #004080;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: left;
+            width: 100%;
+        }
+
+        li img {
+            display: block;
+            margin: 10px auto;
+        }
+
+        li h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        li p {
+            margin: 8px 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        li button {
+            background-color: #004080;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 15px;
+            width: 100%;
+            display: inline-block;
+        }
+
+        li button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Modal styling */
+        .modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1000; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0, 0, 0, 0.5); 
+    padding-top: 60px;
+}
+
+/* Modal Content Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto; 
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; 
+    max-width: 500px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+/* Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: #333;
+    text-decoration: none;
+}
+
+/* Header Title */
+.modal-content h2 {
+    margin: 0 0 15px;
+    font-size: 24px;
+    color: #004080;
+    text-align: center;
+}
+
+/* Profile Details */
+.modal-content div {
+    margin-bottom: 15px;
+}
+
+.modal-content div strong {
+    display: block;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.modal-content div p {
+    margin: 0;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Profile Image Styling */
+.modal-content img {
+    display: block;
+    margin: 10px auto;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    width: 100px;
+    height: 100px;
+}
+
+/* Button Group */
+.button-group {
+    display: flex;
+    text-align: right;
+    margin-top: 20px;
+    justify-content: space-between;
+}
+
+.button-group button,
+.button-group .btn {
+    padding: 10px 15px;
+    margin-left: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #004080;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.button-group button:hover,
+.button-group .btn:hover {
+    background-color: #0056b3;
+}
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="nav-container">
+            <a href="{% url 'user_applications' %}">Applied Jobs</a>
+            <a href="#jobs-section">Job</a>
+            <a href="#internships-section">Internship</a>
+            <a href="{% url 'user_profile' %}">My Profile</a>
+        </div>
+        <form method="post" action="{% url 'logout' %}" style="margin: 0; padding-right: 5%;">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+    </nav>
+    
+    <div class="opportunity-section">
+        <!-- Jobs Section -->
+        <div id="jobs-section">
+            <h2>Jobs</h2>
+            <ul>
+                {% for job in jobs %}
+                    <li>
+                        <h3>{{ job.title }}</h3>
+                        <p><strong>Domain:</strong> {{ job.domain }}</p>
+                        {% if job.salary %}
+                            <p><strong>Salary:</strong> {{ job.salary }}</p>
+                        {% endif %}
+                        <p><strong>Experience:</strong> {{ job.experience }}</p>
+                        <p><strong>Description:</strong> {{ job.description }}</p>
+                        <p><strong>Prerequisites:</strong> {{ job.prerequisites }}</p>
+                        {% if job.company_logo %}
+                            <img src="{{ job.company_logo.url }}" alt="{{ job.title }} logo" style="width:100px;height:100px;">
+                        {% endif %}
+                        <button onclick="openModal({{ job.id }}, 'job')">Apply</button>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Internships Section -->
+        <div>
+            <h2 id="internships-section">Internships</h2>
+            <ul>
+                {% for internship in internships %}
+                    <li>
+                        <h3>{{ internship.title }}</h3>
+                        <p><strong>Domain:</strong> {{ internship.domain }}</p>
+                        <p><strong>Experience:</strong> {{ internship.experience }}</p>
+                        <p><strong>Description:</strong> {{ internship.description }}</p>
+                        <p><strong>Prerequisites:</strong> {{ internship.prerequisites }}</p>
+                        {% if internship.company_logo %}
+                            <img src="{{ internship.company_logo.url }}" alt="{{ internship.title }} logo" style="width:100px;height:100px;">
+                        {% endif %}
+                        <button onclick="openModal({{ internship.id }}, 'internship')">Apply</button>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+<!-- Modal Popup -->
+<div id="applyModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>User Profile</h2>
+        <div>
+            <strong>Username:</strong>
+            <p>{{ user.username }}</p>
+        </div>
+        <div>
+            <strong>Email:</strong>
+            <p>{{ user.email }}</p>
+        </div>
+        <div>
+            <strong>Mobile No:</strong>
+            <p>{{ user.mobile_no }}</p>
+        </div>
+        <div>
+            <strong>Address:</strong>
+            <p>{{ user.address }}</p>
+        </div>
+        <div>
+            <strong>Domain:</strong>
+            <p>{{ user.domain }}</p>
+        </div>
+        <div>
+            <strong>About:</strong>
+            <p>{{ user.about }}</p>
+        </div>
+        <div>
+            <strong>Profile Image:</strong>
+            {% if user.profile_image %}
+                <img src="{{ user.profile_image.url }}" alt="Profile Image" style="width:100px;height:100px;">
+            {% else %}
+                <p>No profile image uploaded.</p>
+            {% endif %}
+        </div>
+        <div>
+            <strong>Resume:</strong>
+            {% if user.resume %}
+                <a href="{{ user.resume.url }}" target="_blank">View Resume</a>
+            {% else %}
+                <p>No resume uploaded.</p>
+            {% endif %}
+        </div>
+        <div class="button-group">
+            <button type="button" onclick="closeModal()">Close</button>
+            <a href="{% url 'user_profile_edit' %}" class="btn">Edit Profile</a>
+            <form class="btn" method="post" action="{% url 'apply_opportunity' %}">
+                {% csrf_token %}
+                <input type="hidden" name="opportunity_id" id="opportunity_id">
+                <input type="hidden" name="opportunity_type" id="opportunity_type">
+                <button type="submit">Apply</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openModal(opportunityId, opportunityType) {
+        // Set the hidden input values
+        document.getElementById("opportunity_id").value = opportunityId;
+        document.getElementById("opportunity_type").value = opportunityType;
+
+        // Show the modal
+        const modal = document.getElementById("applyModal");
+        if (modal) {
+            modal.style.display = "block";
+        }
+    }
+
+    function closeModal() {
+        const modal = document.getElementById("applyModal");
+        if (modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        nav {
+            background-color: #004080;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        nav .nav-container {
+            display: flex;
+            gap: 15px;
+        }
+
+        nav a, nav button {
+            color: white;
+            text-align: center;
+            padding: 12px 15px;
+            text-decoration: none;
+            font-size: 16px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        nav a:hover, nav button:hover {
+            background-color: #0056b3;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 80px;
+            font-size: 28px;
+            color: #333;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .profile-container {
+            width: 90%;
+            max-width: 600px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.5;
+            margin: 10px 0;
+        }
+        strong {
+            color: #333;
+        }
+        img {
+            max-width: 150px;
+            margin-top: 15px;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        a, .logout-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        a:hover, .logout-button:hover {
+            background-color: #0056b3;
+        }
+        .logout-button {
+            background-color: #dc3545;
+            border: none;
+            cursor: pointer;
+        }
+        .logout-button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="{% url 'user_applications' %}">Applied Jobs</a>
+            <a href="{% url 'opportunity_list' %}">Job</a>
+            <a href="{% url 'opportunity_list' %}">Internship</a>
+            <a href="{% url 'user_profile' %}">My Profile</a>
+        </div>
+        <form method="post" action="{% url 'logout' %}" style="margin: 0; padding-right: 5%;">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+    </nav>
+    <div class="profile-container">
+        <h1>User Profile</h1>
+        <p><strong>Username:</strong> {{ user.username }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Mobile Number:</strong> {{ user.mobile_no }}</p>
+        <p><strong>Address:</strong> {{ user.address }}</p>
+        <p><strong>Domain:</strong> {{ user.domain }}</p>
+        <p><strong>About:</strong> {{ user.about }}</p>
+        {% if user.profile_image %}
+            <p><strong>Profile Image:</strong></p>
+            <img src="{{ user.profile_image.url }}" alt="Profile Image">
+        {% else %}
+            <p>No profile image available.</p>
+        {% endif %}
+        <p>
+            <a href="{% url 'user_profile_edit' %}">Edit Profile</a>
+        </p>
+        <form method="post" action="{% url 'logout' %}" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="logout-button">Logout</button>
+        </form>
+    </div>
+</body>
+</html>

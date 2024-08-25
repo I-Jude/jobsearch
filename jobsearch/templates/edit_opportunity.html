@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Opportunity</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        nav {
+            background-color: #004080;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        nav .nav-container {
+            display: flex;
+            gap: 15px;
+        }
+
+        nav a,
+        nav button {
+            color: white;
+            text-align: center;
+            padding: 12px 15px;
+            text-decoration: none;
+            font-size: 16px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav a:hover,
+        nav button:hover {
+            background-color: #0056b3;
+        }
+
+        nav button {
+            background-color: transparent;
+            padding: 12px 15px;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+            color: white;
+        }
+
+        h1 {
+            color: #007bff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .helo   {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            margin: auto;
+            margin-top: 60px;
+        }
+
+        .helo p {
+            margin-bottom: 15px;
+        }
+
+        .helo label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .helo input[type="text"],
+        .helo input[type="file"],
+        .helo select,
+        .helo textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .helo input[type="text"]:focus,
+        .helo input[type="file"]:focus,
+        .helo select:focus,
+        .helo textarea:focus {
+            border-color: #007bff;
+        }
+
+        .helo button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            width: 100%;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .helo button:hover {
+            background-color: #0056b3;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .helo button:active {
+            background-color: #004080;
+            box-shadow: none;
+        }
+
+        @media (max-width: 600px) {
+            form {
+                padding: 20px;
+            }
+
+            form button {
+                font-size: 14px;
+                padding: 10px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="{% url 'manage_users' %}">Manage Users</a>
+            <a href="{% url 'manage_opportunities' %}">Manage Opportunities</a>
+        </div>
+        <form class="logout" method="post" action="{% url 'logout' %}" style="margin: 0; padding-right: 5%">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+    </nav>
+    
+    <form class="helo" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save Changes</button>
+    </form>
+</body>
+</html>

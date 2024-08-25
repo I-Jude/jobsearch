@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile Edit</title>
+    <style>
+        nav {
+            background-color: #004080;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        nav .nav-container {
+            display: flex;
+            gap: 15px;
+        }
+
+        nav a, nav button {
+            color: white;
+            text-align: center;
+            padding: 12px 15px;
+            text-decoration: none;
+            font-size: 16px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        nav a:hover, nav button:hover {
+            background-color: #0056b3;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 80px;
+            font-size: 28px;
+            color: #333;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            width: 90%;
+            max-width: 500px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="file"] {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        img {
+            display: block;
+            max-width: 200px;
+            margin: 20px auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="{% url 'user_applications' %}">Applied Jobs</a>
+            <a href="{% url 'opportunity_list' %}">Job</a>
+            <a href="{% url 'opportunity_list' %}">Internship</a>
+            <a href="{% url 'user_profile' %}">My Profile</a>
+        </div>
+        <form method="post" action="{% url 'logout' %}" style="margin: 0; padding-right: 5%;">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+    </nav>
+    <div class="container">
+        <h1>Profile</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Save changes</button>
+        </form>
+        {% if form.instance.profile_image %}
+            <h2>Your Profile Image:</h2>
+            <img src="{{ form.instance.profile_image.url }}" alt="Profile Image">
+        {% endif %}
+    </div>
+</body>
+</html>

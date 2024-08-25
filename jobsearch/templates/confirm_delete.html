@@ -1,0 +1,68 @@
+<!-- confirm_delete.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirm Deletion</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #d9534f;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        form {
+            display: inline-block;
+            margin: 0 auto;
+        }
+
+        button {
+            background-color: #d9534f;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background-color: #c9302c;
+        }
+
+        a {
+            text-decoration: none;
+            color: #5bc0de;
+            font-size: 16px;
+        }
+
+        a:hover {
+            color: #31b0d5;
+        }
+    </style>
+</head>
+<body>
+    <h1>Confirm Deletion</h1>
+    
+    <p>Are you sure you want to delete "{{ opportunity.title }}"?</p>
+    
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">Confirm</button>
+        <a href="{% url 'manage_opportunities' %}">Cancel</a>
+    </form>
+</body>
+</html>

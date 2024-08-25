@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Applications</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        nav {
+            background-color: #004080;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        nav .nav-container {
+            display: flex;
+            gap: 15px;
+        }
+
+        nav a, nav button {
+            color: white;
+            text-align: center;
+            padding: 12px 15px;
+            text-decoration: none;
+            font-size: 16px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        nav a:hover, nav button:hover {
+            background-color: #0056b3;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 80px;
+            font-size: 28px;
+            color: #333;
+        }
+
+
+        .application-list {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .application-list h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #004080;
+        }
+
+        .application-item {
+            border-bottom: 1px solid #ddd;
+            padding: 15px 0;
+        }
+
+        .application-item:last-child {
+            border-bottom: none;
+        }
+
+        .application-item h3 {
+            margin: 0;
+            font-size: 20px;
+            color: #333;
+        }
+
+        .application-item p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="{% url 'user_applications' %}">Applied Jobs</a>
+            <a href="{% url 'opportunity_list' %}">Job</a>
+            <a href="{% url 'opportunity_list' %}">Internship</a>
+            <a href="{% url 'user_profile' %}">My Profile</a>
+        </div>
+        <form method="post" action="{% url 'logout' %}" style="margin: 0; padding-right: 5%;">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+    </nav>
+
+<h1>My Applications</h1>
+<div class="application-list">
+    {% if applied_jobs %}
+        {% for applied_job in applied_jobs %}
+            <div class="application-item">
+                <h3>{{ applied_job.opportunity.title }} ({{ applied_job.opportunity.get_type_display }})</h3>
+                <p><strong>Domain:</strong> {{ applied_job.opportunity.domain }}</p>
+                <p><strong>Applied on:</strong> {{ applied_job.applied_date|date:"Y-m-d H:i" }}</p>
+                <p><strong>Description:</strong> {{ applied_job.opportunity.description }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>You have not applied for any jobs yet.</p>
+    {% endif %}
+</div>
+
+</body>
+</html>
